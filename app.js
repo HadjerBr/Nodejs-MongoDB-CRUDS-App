@@ -10,6 +10,7 @@ const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const authRouter = require("./routes/authRoutes");
+const searchRouter = require("./routes/searchRoutes");
 
 dotenv.config({path: "config.env"})
 const PORT = process.env.PORT || 8080;
@@ -23,6 +24,7 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true})); // to attach to req.body
 app.use(authRouter);
+app.use(searchRouter);
 app.use(express.json()); // attach the json response as a js OBJECT to req.body
 
 app.use(session({
@@ -147,88 +149,6 @@ app.get("/", (req, res) => {
 })
 
 
-app.post("/tutar/", (req, res) => {
-    Fis.find().then((result) => {
-        res.render("searchByTutar", {title: "search by tutar", fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-    
-})
-app.post("/tur/", (req, res) => {
-    Fis.find().then((result) => {
-        res.render("searchByTur", {title: "search by tur", fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-    
-})
-
-app.post("/tarih/", (req, res) => {
-    Fis.find().then((result) => {
-        res.render("searchByTarih", {title: "search by tarih", fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-    
-})
-
-app.post("/no/", (req, res) => {
-    Fis.find().then((result) => {
-        res.render("searchByNo", {title: "search by no", fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-    
-})
-
-app.post("/kimden/", (req, res) => {
-    Fis.find().then((result) => {
-        res.render("searchByKimden", {title: "search by kimden", fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-    
-})
-
-app.post("/search/Bykimden", (req, res) => {
-    Fis.find({kimden: req.body.search.toLowerCase()}).then((result) => {
-        res.render("searchByKimden", {title: req.body.search, fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-})
-
-app.post("/search/Byno", (req, res) => {
-    Fis.find({no: req.body.search}).then((result) => {
-        res.render("searchByNo", {title: req.body.search, fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-})
-
-app.post("/search/Bytarih", (req, res) => {
-    Fis.find({tarih: new Date(req.body.search + "GMT")}).then((result) => {
-        res.render("searchByTarih", {title: req.body.search, fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-})
-
-app.post("/search/Bytur", (req, res) => {
-    Fis.find({tur: req.body.search.toLowerCase()}).then((result) => {
-        res.render("searchByTur", {title: req.body.search, fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-})
-app.post("/search/Bytutar", (req, res) => {
-    Fis.find({tutar: req.body.search}).then((result) => {
-        res.render("searchByTutar", {title: req.body.search, fisler: result});
-    }).catch(err => {
-        console.log(err);
-    })
-})
 
 
 
