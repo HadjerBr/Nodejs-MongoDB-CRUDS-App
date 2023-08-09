@@ -1,4 +1,4 @@
-// to update => put or patch
+// JWT: for authentication
 
 
 const express = require("express");
@@ -9,16 +9,21 @@ const Tutar = require("./models/tutar");
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
+const authRouter = require("./routes/authRoutes");
 
 dotenv.config({path: "config.env"})
 const PORT = process.env.PORT || 8080;
 
 const app = express();
 
+
+
 app.set('view engine', 'ejs');
 
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true})); // to attach to req.body
+app.use(authRouter);
+app.use(express.json()); // attach the json response as a js OBJECT to req.body
 
 app.use(session({
     secret: 'my-secret-key',
@@ -276,3 +281,5 @@ app.use((req, res) => {
     const title = "Oops-404";
     res.render("404", {title: title});
 })
+
+

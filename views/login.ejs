@@ -1,0 +1,52 @@
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/header.ejs') %>
+
+            <section>
+                <!-- <div class="updateContainer">
+                    <div id="header_and_form_container">
+                        <div id="form_header">Update Fis no  </div> -->
+                <form class="responsive-form" id="loginForm" action="/login" method="post">
+                    <h2 id="updateTitle">Login
+                    </h2>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+
+
+                    <div class="udateButtons">
+                        <!-- <button class="cancelUpdate" id="cancelupdatebtn"><a href="/">Cancel</a></button> -->
+                        <button class="loginButton" id="loginButton" type="submit">Login</button>
+
+
+                    </div>
+
+
+                </form>
+                <!-- </div>
+
+
+                </div> -->
+
+
+            </section>
+
+
+
+
+
+
+
+
+
+
+
+            <%- include('./partials/footer.ejs') %>
+
+                <script src="/update.js"></script>
+
+    </body>
+
+    </html>
