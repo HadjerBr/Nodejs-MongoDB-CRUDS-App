@@ -1,7 +1,13 @@
 
-
-
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+
+const expire = 3 * 24 * 60 * 60; // in seconds
+const createWebtoken = (id) => {
+    return jwt.sign({id}, "3jmr", {
+        expiresIn: expire
+    })
+}
 
 function hundelErrors(err) {
     
@@ -45,7 +51,12 @@ module.exports.signup_post = async (req, res) => {
     
     try{
         const user = await User.create({email, username, password});
-        res.status(201).json(user);
+        
+        const token = createWebtoken(user._id);
+        res.cookie("jwt" ,token, {
+            httpOnly: true, maxAge: expire*1000 // in s
+        });
+        res.status(201).json({user: user._id});
 
     }
     catch (err) {

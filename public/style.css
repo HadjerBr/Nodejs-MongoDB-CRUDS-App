@@ -37,6 +37,7 @@ nav {
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
+  padding: 10px;
 }
 
 .logo a {
@@ -183,7 +184,9 @@ td {
 }
 
 .eski-fisler-sayfa {
-  padding: 6.25rem 2rem;
+  /* padding: 0 2rem; */
+  padding-left: 2rem;
+  padding-right: 2rem;
   display: flex;
   flex-direction: column;
   /* align-content: center; */
@@ -315,7 +318,7 @@ td {
 }
 
 .responsive-form {
-    max-width: 40%;
+    max-width: 30%;
     /* max-width: 500px; */
     margin: 0 auto;
     padding: 20px;
@@ -561,6 +564,14 @@ thead tr {
 }
 
 
+@media (min-width: 500px) and (max-width: 600px) {
+  section {
+    padding: 130px;
+  }
+}
+
+
+
 
 @media (max-width: 768px) {
 
@@ -600,6 +611,7 @@ thead tr {
   }
 }
 
+
 @media (max-width: 480px) {
   body {
     font-size: 0.875rem;
@@ -634,6 +646,15 @@ thead tr {
   #confirmupdatebtn {
     padding: 0.3rem;
   }
+}
+
+.already {
+  color: blue;
+  align-self: flex-end;
+}
+
+.fa-solid fa-user-plus{
+  color: re;
 }
 
 @media (min-width: 1000px)  {
@@ -709,7 +730,7 @@ thead tr {
         font-size: 12px;
     }
     section {
-        padding: 50px 50px;
+        padding: 130px 50px;
     }
     .button {
         font-size: 10px;

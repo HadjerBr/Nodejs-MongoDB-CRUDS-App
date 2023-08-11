@@ -1,6 +1,9 @@
 // hashing password mongoose hooks => to fire a function after saving for example
 // we use pre hook and bcrypt to hash the passwords before saving them the the database
 // salt + hashing algorithm
+// cookies store data in the browser for an amount of time
+// jwt: encoded 3 strings: header, payload, signature
+// login => db=> jwt => stored in a cookie in the user's browser
 
 
 const mongoose = require("mongoose");

@@ -15,13 +15,14 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" required>
 
-
+                    <a class="already" href="/signup">you don't have an account?</a>
                     <div class="udateButtons">
                         <!-- <button class="cancelUpdate" id="cancelupdatebtn"><a href="/">Cancel</a></button> -->
                         <button class="loginButton" id="loginButton" type="submit">Login</button>
 
 
                     </div>
+
 
 
                 </form>
@@ -45,7 +46,24 @@
 
             <%- include('./partials/footer.ejs') %>
 
-                <script src="/update.js"></script>
+
+                <script>
+                    const form = document.getElementById("loginForm");
+                    form.addEventListener("submit", async (e) => {
+                        e.preventDefault();
+
+                        const password = form.password.value;
+                        const username = form.username.value;
+
+                        const res = await fetch("/login", {
+                            method: "POST",
+                            body: JSON.stringify({ username, password }),
+                            headers: { "content-type": "application/json" }
+                        })
+                    })
+                </script>
+
+
 
     </body>
 
