@@ -1,6 +1,14 @@
 const {Router} = require("express");
 const router = new Router();
 const Fis = require("../models/fis");
+const {requireAuth, checkUser }= require("../middlware/authMiddleWare");
+const cookieParser = require("cookie-parser");
+
+
+
+router.use(cookieParser());
+
+router.post("*", checkUser);
 
 router.post("/tutar/", (req, res) => {
     Fis.find().then((result) => {

@@ -37,6 +37,21 @@ function hundelErrors(err) {
 
 }
 
+function handelErrorsForLogin(err) {
+
+    
+    
+    let errors = {username:"", password:""};
+    
+    if(err.message == "Incorrect username or password") {
+        errors.username = "Incorrect username or password";
+    }
+    
+    
+    return errors;
+
+}
+
 
 
 module.exports.signup_get = (req, res) => {
@@ -65,6 +80,25 @@ module.exports.signup_post = async (req, res) => {
 
     }
 }
-module.exports.login_post = (req, res) => {
-    res.send("welcome back! old user");
+module.exports.login_post = async (req, res) => {
+    const { username, password} = req.body;
+    try {
+        const user = await User.login(username, password);
+        
+        const token = createWebtoken(user._id);
+        res.cookie("jwt" ,token, {
+            httpOnly: true, maxAge: expire*1000 // in s
+        });
+        res.status(201).json({user: user._id});
+        
+    }
+    catch(err){
+        const errors = handelErrorsForLogin(err);
+        res.status(400).json({errors});
+    }
+}
+
+module.exports.logout_get = (req, res) => {
+    res.cookie("jwt", "", {maxAge: 1});
+    res.redirect("/");
 }

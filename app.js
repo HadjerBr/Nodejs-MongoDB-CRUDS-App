@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const authRouter = require("./routes/authRoutes");
 const searchRouter = require("./routes/searchRoutes");
+const {requireAuth, checkUser }= require("./middlware/authMiddleWare");
 
 dotenv.config({path: "config.env"})
 const PORT = process.env.PORT || 8080;
@@ -26,6 +27,8 @@ app.use(express.urlencoded({extended: true})); // to attach to req.body
 app.use(authRouter);
 app.use(searchRouter);
 app.use(express.json()); // attach the json response as a js OBJECT to req.body
+app.use(cookieParser());
+app.get("*", checkUser);
 
 app.use(session({
     secret: 'my-secret-key',
@@ -46,14 +49,14 @@ mongoose.connect(dbUri).then( (result) => {
 
 
 
-app.get("/add", (req, res) => {
+app.get("/add",requireAuth, (req, res) => {
     const message = req.session.message || '';
     delete req.session.message;
     const title = "Fiş Ekle";
     res.render("fisEkle", {title: title, message: message}); // for new records
 })
 
-app.post("/", (req, res) => {
+app.post("/",  (req, res) => {
     const fisler = [];
 
     for (let i = 0; i<40; i++) {
@@ -94,39 +97,8 @@ app.post("/", (req, res) => {
         req.session.message = 'Fiş could not be created. Please fill at least one row.';
         res.redirect("/add");
     }
-    
-    // const adet = new Adet({
-    //     adetToplam: req.adet,
-    //     adetEgitim: req.toplamE,
-    //     adetSaglik: req.toplamS,
-    //     adetGida: req.toplamGid,
-    //     adetGiyim: req.toplamGiy,
-    //     adetKira: req.toplamK
-        
-    // });
-    // Adet.insertOne(adet).then((result) => {
-    //     console.log("adet added");
-    // }).catch((err) =>{
-    //     console.log(err);
-        
-    // });
-    // const tutar = new Tutar({
-    //     tutarToplam: req.toplamTutar,
-    //     tutarEgitim: req.etutar,
-    //     tutarSaglik: req.stutar,
-    //     tutarGida: req.gidtutar,
-    //     tutarGiyim: req.giytutar,
-    //     tutarKira: req.ktutar
-        
-    // });
-    // Tutar.insertOne(tutar).then((result) => {
-    //     console.log("tutar added");
-    //     res.redirect("/", {title: "Eski Fisler", fisler: fisler, tutar:tutar, adet:adet});
-
-    // }).catch((err) =>{
-    //     console.log(err);
-        
-    // });
+    //  console.log(err);
+     
 
     
 
@@ -137,7 +109,7 @@ app.post("/", (req, res) => {
     
 })
 
-app.get("/", (req, res) => {
+app.get("/", requireAuth, (req, res) => {
     const message = req.session.message || '';
     delete req.session.message;
     const title = "Eski Fişler";

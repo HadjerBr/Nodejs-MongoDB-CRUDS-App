@@ -34,7 +34,7 @@ nav {
   align-self: center;
   background-color: #c4d3f6;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   padding: 10px;
@@ -374,10 +374,21 @@ td {
 
 
 .responsive-form button {
-    background-color: #4CAF50;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
+  background-color: rgb(140, 250, 182);
+  color: #fff;
+  font-weight: bold;
+  transition: 0.7s ease;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  
+  border: none;
+}
+
+.responsive-form button:hover {
+  cursor: pointer;
+  background-color: rgb(107, 241, 159);
 }
 
 
@@ -561,6 +572,11 @@ thead tr {
   color: #491217;
   font-weight: bold;
   text-decoration: underline;
+}
+
+.email-error, .password-error,.username-error, .passwordOrUsername-error {
+  color: red;
+  align-self: flex-start;
 }
 
 
